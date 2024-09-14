@@ -1,0 +1,32 @@
+services:
+  wordpress:
+    image: wordpress
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+    environment:
+      WORDPRESS_DB_HOST: "${WORDPRESS_DB_HOST}"
+      WORDPRESS_DB_USER: "${WORDPRESS_DB_USER}" 
+      WORDPRESS_DB_PASSWORD: "${WORDPRESS_DB_PASSWORD}"
+      WORDPRESS_DB_NAME: "${WORDPRESS_DB_NAME}" 
+    networks:
+      mjnetwork:
+        ipv4_address: "10.56.1.20"
+  mysql:
+    image: "mysql"
+    environment:
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      mjnetwork:
+        ipv4_address: "10.56.1.21"
+networks:
+  mjnetwork:
+    ipam:
+      driver: default
+      config:
+        - subnet: "10.56.1.0/24"
+
