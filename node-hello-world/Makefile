@@ -1,14 +1,17 @@
-IMAGE_NAME=hello-web
-CONTAINER_NAME=hello-web-container
+IMAGE_NAME=hello-node-web
+CONTAINER_NAME=hello-node-web-ctr
 PORT=3000
 
-.PHONY: build run stop clean
+.PHONY: build run test stop clean
 
 build:
 	docker build -t $(IMAGE_NAME) .
 
 run:
 	docker run --rm -d -p $(PORT):$(PORT) --name $(CONTAINER_NAME) $(IMAGE_NAME)
+
+test:
+	curl localhost:$(PORT)
 
 stop:
 	docker stop $(CONTAINER_NAME)
