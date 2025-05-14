@@ -17,5 +17,5 @@ stop:
 	docker stop $(CONTAINER_NAME)
 
 clean: stop
-	-docker rm $(CONTAINER_NAME)
+	-docker container rm $(CONTAINER_NAME)
 	-docker rmi $(IMAGE_NAME)
