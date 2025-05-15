@@ -1,0 +1,42 @@
+version: "3"
+services:
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - "80:80"         # Public HTTP Port
+      - "81:81"         # Admin Web Interface
+      - "443:443"       # Public HTTPS Port
+    environment:
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "npm_password"
+      DB_MYSQL_NAME: "npm"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    depends_on:
+      - db
+    networks:
+      - npm_network
+
+  db:
+    image: mariadb:10.5
+    container_name: nginx-proxy-manager-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "root_password"
+      MYSQL_DATABASE: "npm"
+      MYSQL_USER: "npm"
+      MYSQL_PASSWORD: "npm_password"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+
+    networks:
+      - npm_network
+
+networks:
+  npm_network:
+    driver: bridge
