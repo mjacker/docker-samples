@@ -9,9 +9,9 @@ services:
         external_url 'http://gitlab.example.com'
         gitlab_rails['gitlab_shell_ssh_port'] = 2224
     ports:
-      - '80:80'       # HTTP
-      - '443:443'     # HTTPS
-      - '2224:22'     # SSH
+      - '8022:22'     # SSH
+      - '8080:80'       # HTTP
+      - '8443:443'     # HTTPS
     volumes:
       - gitlab-config:/etc/gitlab
       - gitlab-logs:/var/log/gitlab
