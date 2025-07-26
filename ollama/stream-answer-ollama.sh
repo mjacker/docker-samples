@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MODEL="llama3"
+MODEL="llama3:8b"
 PROMPT="$1"
 
 if [ -z "$PROMPT" ]; then
